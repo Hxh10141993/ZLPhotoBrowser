@@ -274,7 +274,7 @@ class ZLThumbnailViewController: UIViewController {
         
         self.doneBtn = createBtn(localLanguageTextValue(.done), #selector(doneBtnClick))
         self.doneBtn.layer.masksToBounds = true
-        self.doneBtn.layer.cornerRadius = ZLLayout.bottomToolBtnCornerRadius
+        self.doneBtn.layer.cornerRadius = ZLPhotoConfiguration.default().bottomToolViewBtnCornerRadius
         self.bottomView.addSubview(self.doneBtn)
         
         self.setupNavView()
@@ -519,7 +519,7 @@ class ZLThumbnailViewController: UIViewController {
         if selCount > 0 {
             doneTitle += "(" + String(selCount) + ")"
         }
-        let doneBtnW = doneTitle.boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 30)).width + 20
+        let doneBtnW = doneTitle.boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 30)).width + ZLPhotoConfiguration.default().bottomToolViewBtnMargin
         self.doneBtn.frame = CGRect(x: self.bottomView.bounds.width-doneBtnW-15, y: 7, width: doneBtnW, height: ZLLayout.bottomToolBtnH)
     }
     

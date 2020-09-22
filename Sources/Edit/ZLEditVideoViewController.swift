@@ -162,7 +162,7 @@ public class ZLEditVideoViewController: UIViewController {
         
         let cancelBtnW = localLanguageTextValue(.previewCancel).boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: btnH)).width
         self.cancelBtn.frame = CGRect(x: 20, y: self.view.bounds.height - insets.bottom - btnH, width: cancelBtnW, height: btnH)
-        let doneBtnW = localLanguageTextValue(.done).boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: btnH)).width + 20
+        let doneBtnW = localLanguageTextValue(.done).boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: btnH)).width + ZLPhotoConfiguration.default().bottomToolViewBtnMargin
         self.doneBtn.frame = CGRect(x: self.view.bounds.width-doneBtnW-20, y: self.view.bounds.height - insets.bottom - btnH, width: doneBtnW, height: btnH)
         
         self.collectionView.frame = CGRect(x: 0, y: self.doneBtn.frame.minY - bottomBtnAndColSpacing - ZLEditVideoViewController.frameImageSize.height, width: self.view.bounds.width, height: ZLEditVideoViewController.frameImageSize.height)
@@ -240,7 +240,7 @@ public class ZLEditVideoViewController: UIViewController {
         self.doneBtn.addTarget(self, action: #selector(doneBtnClick), for: .touchUpInside)
         self.doneBtn.backgroundColor = .bottomToolViewBtnNormalBgColor
         self.doneBtn.layer.masksToBounds = true
-        self.doneBtn.layer.cornerRadius = ZLLayout.bottomToolBtnCornerRadius
+        self.doneBtn.layer.cornerRadius = ZLPhotoConfiguration.default().bottomToolViewBtnCornerRadius
         self.view.addSubview(self.doneBtn)
     }
     

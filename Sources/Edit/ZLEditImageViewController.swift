@@ -222,7 +222,7 @@ public class ZLEditImageViewController: UIViewController {
         }
         
         let doneBtnH = ZLLayout.bottomToolBtnH
-        let doneBtnW = localLanguageTextValue(.editFinish).boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: doneBtnH)).width + 20
+        let doneBtnW = localLanguageTextValue(.editFinish).boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: doneBtnH)).width + ZLPhotoConfiguration.default().bottomToolViewBtnMargin
         // y 多减的 8 是为了和工具条居中 (50 - doneBtnH) / 2 = 8
         self.doneBtn.frame = CGRect(x: self.view.frame.width-15-doneBtnW, y: toolBtnY, width: doneBtnW, height: doneBtnH)
         
@@ -342,7 +342,7 @@ public class ZLEditImageViewController: UIViewController {
         self.doneBtn.setTitle(localLanguageTextValue(.editFinish), for: .normal)
         self.doneBtn.addTarget(self, action: #selector(doneBtnClick), for: .touchUpInside)
         self.doneBtn.layer.masksToBounds = true
-        self.doneBtn.layer.cornerRadius = ZLLayout.bottomToolBtnCornerRadius
+        self.doneBtn.layer.cornerRadius = ZLPhotoConfiguration.default().bottomToolViewBtnCornerRadius
         self.bottomShadowView.addSubview(self.doneBtn)
         
         let layout = UICollectionViewFlowLayout()

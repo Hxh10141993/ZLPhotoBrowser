@@ -205,7 +205,7 @@ class ZLPhotoPreviewViewController: UIViewController {
         if selCount > 0 {
             doneTitle += "(" + String(selCount) + ")"
         }
-        let doneBtnW = doneTitle.boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 30)).width + 20
+        let doneBtnW = doneTitle.boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 30)).width + ZLPhotoConfiguration.default().bottomToolViewBtnMargin
         self.doneBtn.frame = CGRect(x: self.bottomView.bounds.width-doneBtnW-15, y: btnY, width: doneBtnW, height: ZLLayout.bottomToolBtnH)
     }
     
@@ -311,7 +311,8 @@ class ZLPhotoPreviewViewController: UIViewController {
         self.doneBtn = createBtn(localLanguageTextValue(.done), #selector(doneBtnClick))
         self.doneBtn.backgroundColor = .bottomToolViewBtnNormalBgColor
         self.doneBtn.layer.masksToBounds = true
-        self.doneBtn.layer.cornerRadius = ZLLayout.bottomToolBtnCornerRadius
+        /// 直接通过外部赋值修改按钮的圆弧程度
+        self.doneBtn.layer.cornerRadius =  ZLPhotoConfiguration.default().bottomToolViewBtnCornerRadius
         self.bottomView.addSubview(self.doneBtn)
         
         self.view.bringSubviewToFront(self.navView)

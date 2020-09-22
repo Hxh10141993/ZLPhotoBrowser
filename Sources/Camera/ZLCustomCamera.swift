@@ -220,7 +220,7 @@ public class ZLCustomCamera: UIViewController, CAAnimationDelegate {
         let editBtnW = localLanguageTextValue(.edit).boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 40)).width
         self.editBtn.frame = CGRect(x: 20, y: self.view.bounds.height - insets.bottom - ZLLayout.bottomToolBtnH - 40, width: editBtnW, height: ZLLayout.bottomToolBtnH)
         
-        let doneBtnW = localLanguageTextValue(.done).boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 40)).width + 20
+        let doneBtnW = localLanguageTextValue(.done).boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 40)).width + ZLPhotoConfiguration.default().bottomToolViewBtnMargin
         self.doneBtn.frame = CGRect(x: self.view.bounds.width - doneBtnW - 20, y: self.view.bounds.height - insets.bottom - ZLLayout.bottomToolBtnH - 40, width: doneBtnW, height: ZLLayout.bottomToolBtnH)
     }
     
@@ -336,7 +336,7 @@ public class ZLCustomCamera: UIViewController, CAAnimationDelegate {
         self.doneBtn.addTarget(self, action: #selector(doneBtnClick), for: .touchUpInside)
         self.doneBtn.isHidden = true
         self.doneBtn.layer.masksToBounds = true
-        self.doneBtn.layer.cornerRadius = ZLLayout.bottomToolBtnCornerRadius
+        self.doneBtn.layer.cornerRadius = ZLPhotoConfiguration.default().bottomToolViewBtnCornerRadius
         self.view.addSubview(self.doneBtn)
         
         let focusCursorTap = UITapGestureRecognizer(target: self, action: #selector(adjustFocusPoint))

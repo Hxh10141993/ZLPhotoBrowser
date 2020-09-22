@@ -291,6 +291,12 @@ public class ZLPhotoConfiguration: NSObject {
     /// 下方工具条模糊样式
     @objc public var bottomToolViewBlurEffect: UIBlurEffect? = UIBlurEffect(style: .dark)
     
+    /// 2020-9-22 补充方法
+    
+    /// 下方工具条确定按钮默认左右间距(用于撑开按钮)
+    @objc public var bottomToolViewBtnMargin: CGFloat = 30
+    /// 下方工具条确定按钮圆弧
+    @objc public var bottomToolViewBtnCornerRadius: CGFloat = 17
     /// 框架主题颜色配置
     @objc public var themeColorDeploy: ZLPhotoThemeColorDeploy = .default()
     
