@@ -68,11 +68,13 @@ class ZLAlbumListCell: UITableViewCell {
         
         self.coverImageView.frame = CGRect(x: imageViewX, y: 2, width: self.bounds.height-4, height: self.bounds.height-4)
         if let m = self.model {
-            let titleW = min(self.bounds.width / 3 * 2, m.title.boundingRect(font: getFont(17), limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 30)).width)
-            self.titleLabel.frame = CGRect(x: self.coverImageView.frame.maxX + 10, y: (self.bounds.height - 30)/2, width: titleW, height: 30)
+            let titleW = min(self.bounds.width / 3 * 2, m.title.boundingRect(font: getFont(14), limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat(MAXFLOAT))).width)
+            let titleH = min(self.bounds.width / 3 * 2, m.title.boundingRect(font: getFont(14), limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat(MAXFLOAT))).height)
             
-            let countSize = ("(" + String(self.model.count) + ")").boundingRect(font: getFont(16), limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 30))
-            self.countLabel.frame = CGRect(x: self.titleLabel.frame.maxX + 10, y: (self.bounds.height - 30)/2, width: countSize.width, height: 30)
+            self.titleLabel.frame = CGRect(x: self.coverImageView.frame.maxX + 16, y: self.coverImageView.frame.minX + 16, width: titleW, height: titleH)
+            
+            let countSize = (String(self.model.count)).boundingRect(font: getFont(14), limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat(MAXFLOAT)))
+            self.countLabel.frame = CGRect(x: self.coverImageView.frame.maxX + 16, y: self.titleLabel.frame.maxY + 8, width: countSize.width, height: countSize.height)
         }
         self.selectBtn.frame = CGRect(x: self.bounds.width - 20 - 20, y: (self.bounds.height - 20) / 2, width: 20, height: 20)
     }
@@ -91,13 +93,13 @@ class ZLAlbumListCell: UITableViewCell {
         self.contentView.addSubview(self.coverImageView)
         
         self.titleLabel = UILabel()
-        self.titleLabel.font = getFont(17)
+        self.titleLabel.font = getFont(14)
         self.titleLabel.textColor = .albumListTitleColor
         self.titleLabel.lineBreakMode = .byTruncatingTail
         self.contentView.addSubview(self.titleLabel)
         
         self.countLabel = UILabel()
-        self.countLabel.font = getFont(16)
+        self.countLabel.font = getFont(14)
         self.countLabel.textColor = .albumListCountColor
         self.contentView.addSubview(self.countLabel)
         
@@ -113,7 +115,7 @@ class ZLAlbumListCell: UITableViewCell {
         self.style = style
         
         self.titleLabel.text = self.model.title
-        self.countLabel.text = "(" + String(self.model.count) + ")"
+        self.countLabel.text = String(self.model.count)
         
         if style == .embedAlbumList {
             self.accessoryType = .none

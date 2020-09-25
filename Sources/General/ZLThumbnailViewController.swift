@@ -1039,7 +1039,7 @@ class ZLEmbedAlbumListNavView: UIView {
         
         self.navBlurView?.frame = self.bounds
         
-        let albumTitleW = min(self.bounds.width / 2, self.title.boundingRect(font: ZLLayout.navTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 44)).width)
+        let albumTitleW = min(self.bounds.width / 2, self.title.boundingRect(font: ZLPhotoConfiguration.default().navTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 44)).width)
         let titleBgControlW = albumTitleW + ZLEmbedAlbumListNavView.arrowH + 20
         
         UIView.animate(withDuration: 0.25) {
@@ -1066,14 +1066,14 @@ class ZLEmbedAlbumListNavView: UIView {
         
         self.albumTitleLabel = UILabel()
         self.albumTitleLabel.textColor = .navTitleColor
-        self.albumTitleLabel.font = ZLLayout.navTitleFont
+        self.albumTitleLabel.font = ZLPhotoConfiguration.default().navTitleFont
         self.albumTitleLabel.text = self.title
         self.albumTitleLabel.textAlignment = .center
         self.titleBgControl.addSubview(self.albumTitleLabel)
         
         self.arrow = UIImageView(image: getImage("zl_downArrow"))
         self.arrow.clipsToBounds = true
-        self.arrow.contentMode = .scaleAspectFill
+        self.arrow.contentMode = .scaleAspectFit
         self.titleBgControl.addSubview(self.arrow)
         
         self.cancelBtn = UIButton(type: .custom)

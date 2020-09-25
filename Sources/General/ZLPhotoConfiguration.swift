@@ -297,6 +297,10 @@ public class ZLPhotoConfiguration: NSObject {
     @objc public var bottomToolViewBtnMargin: CGFloat = 30
     /// 下方工具条确定按钮圆弧
     @objc public var bottomToolViewBtnCornerRadius: CGFloat = 17
+    /// 导航栏文字font
+    @objc public var navTitleFont:UIFont = .systemFont(ofSize: 14)
+    /// 设置拍摄模式是否全屏
+    @objc public var videoFullScreen: Bool = false
     /// 框架主题颜色配置
     @objc public var themeColorDeploy: ZLPhotoThemeColorDeploy = .default()
     

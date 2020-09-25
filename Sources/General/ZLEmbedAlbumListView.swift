@@ -94,7 +94,7 @@ class ZLEmbedAlbumListView: UIView {
         self.tableView = UITableView(frame: .zero, style: .plain)
         self.tableView.backgroundColor = .albumListBgColor
         self.tableView.tableFooterView = UIView()
-        self.tableView.rowHeight = 60
+        self.tableView.rowHeight = 80
         self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 0)
         self.tableView.separatorColor = .separatorColor
         self.tableView.delegate = self
@@ -130,9 +130,9 @@ class ZLEmbedAlbumListView: UIView {
         let toFrame: CGRect
         
         if UIApplication.shared.statusBarOrientation.isPortrait {
-            toFrame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height*0.7)
+            toFrame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
         } else {
-            toFrame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height*0.8)
+            toFrame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
         }
         
         self.isHidden = false

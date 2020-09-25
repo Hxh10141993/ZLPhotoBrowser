@@ -88,6 +88,8 @@ public class ZLCustomCamera: UIViewController, CAAnimationDelegate {
     
     var movieFileOutput: AVCaptureMovieFileOutput!
     
+    var videoDataOutput: AVCaptureVideoDataOutput!
+    
     var previewLayer: AVCaptureVideoPreviewLayer?
     
     var recordVideoPlayerLayer: AVPlayerLayer?
@@ -199,7 +201,11 @@ public class ZLCustomCamera: UIViewController, CAAnimationDelegate {
         if #available(iOS 11.0, *) {
             insets = self.view.safeAreaInsets
         }
-        let previewLayerY: CGFloat = insets.top > 0 ? 20 : 0
+        var previewLayerY: CGFloat = insets.top > 20 ? 0 : 0
+        
+        if ZLPhotoConfiguration.default().videoFullScreen {
+            previewLayerY = 0
+        }
         self.previewLayer?.frame = CGRect(x: 0, y: previewLayerY, width: self.view.bounds.width, height: self.view.bounds.height)
         self.recordVideoPlayerLayer?.frame = self.view.bounds
         self.takedImageView.frame = self.view.bounds
@@ -230,9 +236,12 @@ public class ZLCustomCamera: UIViewController, CAAnimationDelegate {
         self.takedImageView = UIImageView()
         self.takedImageView.backgroundColor = .black
         self.takedImageView.isHidden = true
-        self.takedImageView.contentMode = .scaleAspectFit
+        if ZLPhotoConfiguration.default().videoFullScreen {
+            self.takedImageView.contentMode = .scaleAspectFill
+        }else{
+            self.takedImageView.contentMode = .scaleAspectFit
+        }
         self.view.addSubview(self.takedImageView)
-        
         self.focusCursorView = UIImageView(image: getImage("zl_focus"))
         self.focusCursorView.contentMode = .scaleAspectFit
         self.focusCursorView.clipsToBounds = true
@@ -350,7 +359,11 @@ public class ZLCustomCamera: UIViewController, CAAnimationDelegate {
             
             self.recordVideoPlayerLayer = AVPlayerLayer()
             self.recordVideoPlayerLayer?.backgroundColor = UIColor.black.cgColor
-            self.recordVideoPlayerLayer?.videoGravity = .resizeAspect
+            if ZLPhotoConfiguration.default().videoFullScreen {
+                self.recordVideoPlayerLayer?.videoGravity = .resizeAspectFill
+            }else{
+                self.recordVideoPlayerLayer?.videoGravity = .resizeAspect
+            }
             self.recordVideoPlayerLayer?.isHidden = true
             self.view.layer.insertSublayer(self.recordVideoPlayerLayer!, at: 0)
             
@@ -400,7 +413,6 @@ public class ZLCustomCamera: UIViewController, CAAnimationDelegate {
         self.videoInput = input
         // 照片输出流
         self.imageOutput = AVCapturePhotoOutput()
-        
         // 音频输入流
         var audioInput: AVCaptureDeviceInput?
         if ZLPhotoConfiguration.default().allowRecordVideo, let microphone = self.getMicrophone() {
@@ -434,7 +446,11 @@ public class ZLCustomCamera: UIViewController, CAAnimationDelegate {
         }
         // 预览layer
         self.previewLayer = AVCaptureVideoPreviewLayer(session: self.session)
-        self.previewLayer?.videoGravity = .resizeAspect
+        if ZLPhotoConfiguration.default().videoFullScreen {
+            self.recordVideoPlayerLayer?.videoGravity = .resizeAspectFill
+        }else{
+            self.recordVideoPlayerLayer?.videoGravity = .resizeAspect
+        }
         self.view.layer.masksToBounds = true
         self.view.layer.insertSublayer(self.previewLayer!, at: 0)
         
@@ -542,6 +558,7 @@ public class ZLCustomCamera: UIViewController, CAAnimationDelegate {
     }
     
     @objc func toggleCameraBtnClick() {
+        
         let cameraCount = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .unspecified).devices.count
         guard cameraCount > 1 else {
             return
@@ -550,6 +567,7 @@ public class ZLCustomCamera: UIViewController, CAAnimationDelegate {
             guard let currInput = self.videoInput else {
                 return
             }
+            
             var newVideoInput: AVCaptureDeviceInput?
             if currInput.device.position == .back, let front = self.getCamera(position: .front) {
                 newVideoInput = try AVCaptureDeviceInput(device: front)
@@ -559,6 +577,7 @@ public class ZLCustomCamera: UIViewController, CAAnimationDelegate {
                 return
             }
             if let ni = newVideoInput {
+             
                 self.session.beginConfiguration()
                 self.session.removeInput(currInput)
                 if self.session.canAddInput(ni) {
@@ -815,6 +834,8 @@ extension ZLCustomCamera: AVCapturePhotoCaptureDelegate {
         } else {
             zl_debugPrint("拍照失败，data为空")
         }
+    
+        
     }
     
 }
