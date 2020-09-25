@@ -231,9 +231,10 @@ class ZLPhotoPreviewViewController: UIViewController {
         self.navView.addSubview(self.backBtn)
         
         self.selectBtn = UIButton(type: .custom)
-        self.selectBtn.setImage(getImage("zl_btn_circle"), for: .normal)
-        self.selectBtn.setImage(getImage("zl_btn_selected"), for: .selected)
+        self.selectBtn.setBackgroundImage(getImage("zl_btn_circle"), for: .normal)
+        self.selectBtn.setBackgroundImage(getImage("zl_btn_selected"), for: .selected)
         self.selectBtn.zl_enlargeValidTouchArea(inset: 10)
+        self.selectBtn.titleLabel?.font = .systemFont(ofSize: 14)
         self.selectBtn.addTarget(self, action: #selector(selectBtnClick), for: .touchUpInside)
         self.navView.addSubview(self.selectBtn)
         
@@ -309,6 +310,16 @@ class ZLPhotoPreviewViewController: UIViewController {
         self.bottomView.addSubview(self.originalBtn)
         
         self.doneBtn = createBtn(localLanguageTextValue(.done), #selector(doneBtnClick))
+        
+        /// 修改
+        if ZLPhotoConfiguration.default().bottomToolViewBtnBgImageShow {
+            self.doneBtn.setBackgroundImage(UIImage.init(named: ZLPhotoConfiguration.default().botomToolViewBtnBgImageName!), for: .normal)
+        }
+        
+        if ZLPhotoConfiguration.default().bottomToolViewBtnBgImageShow {
+            self.doneBtn.setBackgroundImage(UIImage.init(named: ZLPhotoConfiguration.default().botomToolViewBtnBgImageName!), for: .selected)
+        }
+        
         self.doneBtn.backgroundColor = .bottomToolViewBtnNormalBgColor
         self.doneBtn.layer.masksToBounds = true
         /// 直接通过外部赋值修改按钮的圆弧程度
@@ -419,13 +430,17 @@ class ZLPhotoPreviewViewController: UIViewController {
         }
         let nav = self.navigationController as! ZLImageNavController
         if let index = nav.arrSelectedModels.firstIndex(where: { $0 == self.arrDataSources[self.currentIndex] }) {
-            self.indexLabel.isHidden = false
-            self.indexLabel.text = String(index + 1)
+            self.indexLabel.isHidden = true
+//            self.indexLabel.text = String(index + 1)
+            self.selectBtn.setTitle(String(index + 1), for: .normal)
         } else {
             self.indexLabel.isHidden = true
+            
+            self.selectBtn.setTitle("", for: .normal)
         }
         if animate {
-            self.indexLabel.layer.add(getSpringAnimation(), forKey: nil)
+
+//            self.indexLabel.layer.add(getSpringAnimation(), forKey: nil)
         }
     }
     

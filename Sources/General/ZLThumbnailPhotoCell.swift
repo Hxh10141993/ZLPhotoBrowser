@@ -96,6 +96,7 @@ class ZLThumbnailPhotoCell: UICollectionViewCell {
         self.btnSelect = UIButton(type: .custom)
         self.btnSelect.setBackgroundImage(getImage("zl_btn_unselected"), for: .normal)
         self.btnSelect.setBackgroundImage(getImage("zl_btn_selected"), for: .selected)
+        self.btnSelect.titleLabel?.font = .systemFont(ofSize: 14)
         self.btnSelect.addTarget(self, action: #selector(btnSelectClick), for: .touchUpInside)
         self.contentView.addSubview(self.btnSelect)
         

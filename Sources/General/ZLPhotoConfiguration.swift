@@ -299,6 +299,10 @@ public class ZLPhotoConfiguration: NSObject {
     @objc public var bottomToolViewBtnCornerRadius: CGFloat = 17
     /// 导航栏文字font
     @objc public var navTitleFont:UIFont = .systemFont(ofSize: 14)
+    /// 确认按钮是否添加背景图片跟路径同时使用
+    @objc public var bottomToolViewBtnBgImageShow:Bool = false
+    /// 确认按钮默认选中图片路径
+    @objc public var botomToolViewBtnBgImageName:String?
     /// 设置拍摄模式是否全屏
     @objc public var videoFullScreen: Bool = false
     /// 框架主题颜色配置

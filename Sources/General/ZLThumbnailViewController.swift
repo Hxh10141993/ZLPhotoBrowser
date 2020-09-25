@@ -276,6 +276,9 @@ class ZLThumbnailViewController: UIViewController {
         self.doneBtn.layer.masksToBounds = true
         self.doneBtn.layer.cornerRadius = ZLPhotoConfiguration.default().bottomToolViewBtnCornerRadius
         self.bottomView.addSubview(self.doneBtn)
+        if ZLPhotoConfiguration.default().bottomToolViewBtnBgImageShow {
+            self.doneBtn.setBackgroundImage(UIImage.init(named: ZLPhotoConfiguration.default().botomToolViewBtnBgImageName!), for: .selected)
+        }
         
         self.setupNavView()
     }
@@ -503,11 +506,14 @@ class ZLThumbnailViewController: UIViewController {
             let doneTitle = localLanguageTextValue(.done) + "(" + String(nav.arrSelectedModels.count) + ")"
             self.doneBtn.setTitle(doneTitle, for: .normal)
             self.doneBtn.backgroundColor = .bottomToolViewBtnNormalBgColor
+            self.doneBtn.isSelected = true
+            
         } else {
             self.previewBtn.isEnabled = false
             self.doneBtn.isEnabled = false
             self.doneBtn.setTitle(localLanguageTextValue(.done), for: .normal)
             self.doneBtn.backgroundColor = .bottomToolViewBtnDisableBgColor
+            self.doneBtn.isSelected = false
         }
         self.originalBtn.isSelected = nav.isSelectedOriginal
         self.refreshDoneBtnFrame()
@@ -859,10 +865,16 @@ extension ZLThumbnailViewController: UICollectionViewDataSource, UICollectionVie
             return
         }
         cell?.index = index
-        cell?.indexLabel.isHidden = !showIndexLabel
-        if animate {
-            cell?.indexLabel.layer.add(getSpringAnimation(), forKey: nil)
+        if index == 0 {
+            cell?.btnSelect.setTitle(nil, for: .normal)
+        }else{
+            cell?.btnSelect.setTitle(String(index), for: .normal)
         }
+       
+//        cell?.indexLabel.isHidden = !showIndexLabel
+//        if animate {
+//            cell?.indexLabel.layer.add(getSpringAnimation(), forKey: nil)
+//        }
     }
     
     func refreshCellIndex() {

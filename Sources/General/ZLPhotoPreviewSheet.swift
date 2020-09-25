@@ -854,10 +854,16 @@ extension ZLPhotoPreviewSheet: UICollectionViewDataSource, UICollectionViewDeleg
             return
         }
         cell?.index = index
-        cell?.indexLabel.isHidden = !showIndexLabel
-        if animate {
-            cell?.indexLabel.layer.add(getSpringAnimation(), forKey: nil)
+        if index == 0 {
+            cell?.btnSelect.setTitle(nil, for: .normal)
+        }else{
+            cell?.btnSelect.setTitle(String(index), for: .normal)
         }
+//        cell?.index = index
+//        cell?.indexLabel.isHidden = !showIndexLabel
+//        if animate {
+//            cell?.indexLabel.layer.add(getSpringAnimation(), forKey: nil)
+//        }
     }
     
     func refreshCellIndex() {
