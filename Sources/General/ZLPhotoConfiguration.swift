@@ -164,6 +164,8 @@ public class ZLPhotoConfiguration: NSObject {
     
     /// 是否在不能选择的cell上方覆盖一层遮罩层
     @objc public var showInvalidMask = true
+    /// 是否在不能选择的cell上方覆盖一层遮罩层有点击效果
+    @objc public var enableInvalidClickStatus = false
     
     /// 是否显示选中图片的index
     @objc public var showSelectedIndex = true

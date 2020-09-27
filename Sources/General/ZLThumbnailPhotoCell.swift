@@ -145,7 +145,7 @@ class ZLThumbnailPhotoCell: UICollectionViewCell {
     }
     
     @objc func btnSelectClick() {
-        if !self.enableSelect, ZLPhotoConfiguration.default().showInvalidMask {
+        if !self.enableSelect, ZLPhotoConfiguration.default().showInvalidMask,!ZLPhotoConfiguration.default().enableInvalidClickStatus {
             return
         }
         
