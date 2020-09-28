@@ -525,7 +525,9 @@ class ZLPhotoPreviewViewController: UIViewController {
         let currentModel = self.arrDataSources[self.currentIndex]
         
         if nav.arrSelectedModels.isEmpty, canAddModel(currentModel, currentSelectCount: nav.arrSelectedModels.count, sender: self) {
-            // 判断视频
+            let hud = ZLProgressHUD(style: ZLPhotoConfiguration.default().hudStyle)
+            hud.show()
+//            // 判断视频
             if ZLPhotoConfiguration.default().enableCropOneVideo,currentModel.type == .video , currentModel.asset.duration > 60.0 {
                 PHImageManager.default().requestAVAsset(forVideo: currentModel.asset, options: nil, resultHandler: { avAsset, audioMix, info in
                     let duration = CMTimeMakeWithSeconds(Float64(60.0), preferredTimescale:avAsset!.duration.timescale)
@@ -538,7 +540,10 @@ class ZLPhotoPreviewViewController: UIViewController {
                                 if suc, asset != nil {
                                     let m = ZLPhotoModel(asset: asset!)
                                     m.isSelected = true
+                                    hud.hide()
+//                                    nav.arrSelectedModels.append(m)
                                     nav?.arrSelectedModels.append(m)
+                                    nav?.selectImageBlock?()
                                 } else {
                                     showAlertView(localLanguageTextValue(.saveVideoError), self)
                                 }
@@ -546,6 +551,8 @@ class ZLPhotoPreviewViewController: UIViewController {
                         }
                     }
                 })
+            }else{
+                nav.arrSelectedModels.append(currentModel)
             }
             
             
