@@ -65,6 +65,10 @@ class ZLThumbnailViewController: UIViewController {
     
     var arrDataSources: [ZLPhotoModel] = []
     
+    var cropView : UIView!
+    
+    var cropLable: UILabel!
+    
     var showCameraCell: Bool {
         if ZLPhotoConfiguration.default().allowTakePhotoInLibrary && self.albumList.isCameraRoll {
             return true
@@ -194,13 +198,18 @@ class ZLThumbnailViewController: UIViewController {
         
         guard showBottomView else { return }
         
+                
         let btnH = ZLLayout.bottomToolBtnH
         
         self.bottomView.frame = CGRect(x: 0, y: self.view.frame.height-insets.bottom-bottomViewH, width: self.view.bounds.width, height: bottomViewH+insets.bottom)
         self.bottomBlurView?.frame = self.bottomView.bounds
         
+        if ZLPhotoConfiguration.default().enableBottomToolViewCropView{
+            self.cropView.frame = CGRect(x: 0, y: self.view.frame.height - insets.bottom - bottomViewH - btnH, width: self.view.bounds.width, height: ZLLayout.cropToolViewH)
+            self.cropLable.frame = CGRect(x: 16, y: self.view.frame.height - insets.bottom - bottomViewH - btnH, width: self.view.bounds.width - 16, height: ZLLayout.cropToolViewH)
+        }
+    
         let btnY: CGFloat = 7
-        
         let previewTitle = localLanguageTextValue(.preview)
         let previewBtnW = previewTitle.boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 30)).width
         self.previewBtn.frame = CGRect(x: 15, y: btnY, width: previewBtnW, height: btnH)
@@ -208,6 +217,9 @@ class ZLThumbnailViewController: UIViewController {
         let originalTitle = localLanguageTextValue(.originalPhoto)
         let w = originalTitle.boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 30)).width + 30
         self.originalBtn.frame = CGRect(x: (self.bottomView.bounds.width-w)/2-5, y: btnY, width: w, height: btnH)
+        
+        
+       
         
         self.refreshDoneBtnFrame()
         
@@ -279,6 +291,20 @@ class ZLThumbnailViewController: UIViewController {
         if ZLPhotoConfiguration.default().bottomToolViewBtnBgImageShow {
             self.doneBtn.setBackgroundImage(UIImage.init(named: ZLPhotoConfiguration.default().botomToolViewBtnBgImageName!), for: .selected)
         }
+        
+        if ZLPhotoConfiguration.default().enableBottomToolViewCropView {
+            self.cropView = UIView()
+            self.cropView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.7)
+            self.view.addSubview(self.cropView)
+        
+            self.cropLable = UILabel()
+            self.cropLable.textColor = UIColor.init(red: 255, green: 255, blue: 255, alpha: 1)
+            self.cropLable.font = UIFont.systemFont(ofSize: 12)
+            self.cropLable.text = "目前视频格式仅支持1分钟时长，超长将自动选取第1分钟哦～"
+            self.view.addSubview(self.cropLable)
+        }
+        
+//        self.cropView.
         
         self.setupNavView()
     }

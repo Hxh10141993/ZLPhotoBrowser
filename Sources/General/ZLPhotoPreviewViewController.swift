@@ -525,10 +525,34 @@ class ZLPhotoPreviewViewController: UIViewController {
         let currentModel = self.arrDataSources[self.currentIndex]
         
         if nav.arrSelectedModels.isEmpty, canAddModel(currentModel, currentSelectCount: nav.arrSelectedModels.count, sender: self) {
-            nav.arrSelectedModels.append(currentModel)
+            // 判断视频
+            if ZLPhotoConfiguration.default().enableCropOneVideo,currentModel.type == .video , currentModel.asset.duration > 60.0 {
+                PHImageManager.default().requestAVAsset(forVideo: currentModel.asset, options: nil, resultHandler: { avAsset, audioMix, info in
+                    let duration = CMTimeMakeWithSeconds(Float64(60.0), preferredTimescale:avAsset!.duration.timescale)
+                    ZLPhotoManager.exportEditVideo(for: avAsset!, range:CMTimeRangeMake(start:CMTimeMakeWithSeconds(Float64(0), preferredTimescale:avAsset!.duration.timescale), duration: duration)
+                    ) { [weak self] (url, error) in
+                        if let er = error {
+                            showAlertView(er.localizedDescription, self)
+                        } else if url != nil {
+                            ZLPhotoManager.saveVideoToAblum(url: url!) { [weak self, weak nav] (suc, asset) in
+                                if suc, asset != nil {
+                                    let m = ZLPhotoModel(asset: asset!)
+                                    m.isSelected = true
+                                    nav?.arrSelectedModels.append(m)
+                                } else {
+                                    showAlertView(localLanguageTextValue(.saveVideoError), self)
+                                }
+                            }
+                        }
+                    }
+                })
+            }
+            
+            
         }
         
         if !nav.arrSelectedModels.isEmpty {
+            // 判断视频
             nav.selectImageBlock?()
         }
     }

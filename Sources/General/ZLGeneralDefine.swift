@@ -36,6 +36,8 @@ struct ZLLayout {
     
     static let bottomToolBtnH: CGFloat = 34
     
+    static let cropToolViewH:CGFloat = 40
+    
     static let bottomToolTitleFont = getFont(17)
     
     static let bottomToolBtnCornerRadius: CGFloat = 5

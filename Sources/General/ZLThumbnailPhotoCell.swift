@@ -121,7 +121,7 @@ class ZLThumbnailPhotoCell: UICollectionViewCell {
         
         self.descLabel = UILabel()
         self.descLabel.font = getFont(13)
-        self.descLabel.textAlignment = .right
+        self.descLabel.textAlignment = .left
         self.descLabel.textColor = .white
         self.bottomShadowView.addSubview(self.descLabel)
         
