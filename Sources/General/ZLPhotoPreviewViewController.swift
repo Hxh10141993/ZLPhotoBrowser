@@ -1045,7 +1045,7 @@ class ZLPhotoPreviewSelectedViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.imageView.frame = self.bounds
-        self.tagImageView.frame = CGRect(x: 5, y: self.bounds.height-25, width: 20, height: 20)
+        self.tagImageView.frame = CGRect(x: 5, y: self.bounds.height-25, width: 21, height: 21)
         self.tagLabel.frame = CGRect(x: 5, y: self.bounds.height - 25, width: self.bounds.width-10, height: 20)
     }
     

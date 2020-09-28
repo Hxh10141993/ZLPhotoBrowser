@@ -136,7 +136,7 @@ class ZLThumbnailPhotoCell: UICollectionViewCell {
         self.btnSelect.frame = CGRect(x: self.bounds.width - 26, y: 5, width: 23, height: 23)
         self.indexLabel.frame = self.btnSelect.frame
         self.bottomShadowView.frame = CGRect(x: 0, y: self.bounds.height - 25, width: self.bounds.width, height: 25)
-        self.videoTag.frame = CGRect(x: 5, y: 1, width: 20, height: 15)
+        self.videoTag.frame = CGRect(x: 5, y: 1, width: 21, height: 21)
         self.livePhotoTag.frame = CGRect(x: 5, y: -1, width: 20, height: 20)
         self.descLabel.frame = CGRect(x: 30, y: 1, width: self.bounds.width - 35, height: 17)
         self.progressView.frame = CGRect(x: (self.bounds.width - 20)/2, y: (self.bounds.height - 20)/2, width: 20, height: 20)
