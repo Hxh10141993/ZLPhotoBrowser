@@ -534,6 +534,7 @@ class ZLPhotoPreviewViewController: UIViewController {
                     ZLPhotoManager.exportEditVideo(for: avAsset!, range:CMTimeRangeMake(start:CMTimeMakeWithSeconds(Float64(0), preferredTimescale:avAsset!.duration.timescale), duration: duration)
                     ) { [weak self] (url, error) in
                         if let er = error {
+                            hud.hide()
                             showAlertView(er.localizedDescription, self)
                         } else if url != nil {
                             ZLPhotoManager.saveVideoToAblum(url: url!) { [weak self, weak nav] (suc, asset) in
@@ -545,6 +546,7 @@ class ZLPhotoPreviewViewController: UIViewController {
                                     nav?.arrSelectedModels.append(m)
                                     nav?.selectImageBlock?()
                                 } else {
+                                    hud.hide()
                                     showAlertView(localLanguageTextValue(.saveVideoError), self)
                                 }
                             }
@@ -552,6 +554,7 @@ class ZLPhotoPreviewViewController: UIViewController {
                     }
                 })
             }else{
+                hud.hide()
                 nav.arrSelectedModels.append(currentModel)
             }
             
