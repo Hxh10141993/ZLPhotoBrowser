@@ -391,8 +391,15 @@ public class ZLPhotoThemeColorDeploy: NSObject {
     /// 底部工具栏按钮 不可交互 状态标题颜色
     @objc public var bottomToolViewBtnDisableTitleColor = zlRGB(168, 168, 168)
     
+
     /// 底部工具栏按钮 可交互 状态背景颜色
     @objc public var bottomToolViewBtnNormalBgColor = zlRGB(80, 169, 56)
+    
+    /// 底部预览按钮 可交互 字体颜色
+    @objc public var bottomToolViewPreviewNormalTitleColor = UIColor.white
+    /// 底部预览按钮 不可交互 字体背景颜色
+    @objc public var bottomToolViewPreviewDisableTitleColor = zlRGB(102, 102, 102)
+    
     
     /// 底部工具栏按钮 不可交互 状态背景颜色
     @objc public var bottomToolViewBtnDisableBgColor = zlRGB(50, 50, 50)

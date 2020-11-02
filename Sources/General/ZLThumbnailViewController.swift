@@ -213,6 +213,8 @@ class ZLThumbnailViewController: UIViewController {
         let previewTitle = localLanguageTextValue(.preview)
         let previewBtnW = previewTitle.boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 30)).width
         self.previewBtn.frame = CGRect(x: 15, y: btnY, width: previewBtnW, height: btnH)
+    
+        
         
         let originalTitle = localLanguageTextValue(.originalPhoto)
         let w = originalTitle.boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 30)).width + 30
@@ -274,6 +276,8 @@ class ZLThumbnailViewController: UIViewController {
         }
         
         self.previewBtn = createBtn(localLanguageTextValue(.preview), #selector(previewBtnClick))
+        self.previewBtn.setTitleColor(ZLPhotoConfiguration.default().themeColorDeploy.bottomToolViewPreviewNormalTitleColor, for: .normal)
+        self.previewBtn.setTitleColor(ZLPhotoConfiguration.default().themeColorDeploy.bottomToolViewPreviewDisableTitleColor, for: .disabled)
         self.bottomView.addSubview(self.previewBtn)
         
         self.originalBtn = createBtn(localLanguageTextValue(.originalPhoto), #selector(originalPhotoClick))
@@ -554,7 +558,7 @@ class ZLThumbnailViewController: UIViewController {
             doneTitle += "(" + String(selCount) + ")"
         }
         let doneBtnW = doneTitle.boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 30)).width + ZLPhotoConfiguration.default().bottomToolViewBtnMargin
-        self.doneBtn.frame = CGRect(x: self.bottomView.bounds.width-doneBtnW-15, y: 7, width: doneBtnW, height: ZLLayout.bottomToolBtnH)
+        self.doneBtn.frame = CGRect(x: self.bottomView.bounds.width-doneBtnW-15, y:10, width: doneBtnW, height: ZLLayout.bottomToolBtnH)
     }
     
     func scrollToBottom() {
