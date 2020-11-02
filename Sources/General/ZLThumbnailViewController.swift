@@ -298,11 +298,12 @@ class ZLThumbnailViewController: UIViewController {
         
         if ZLPhotoConfiguration.default().enableBottomToolViewCropView {
             self.cropView = UIView()
-            self.cropView.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.7)
+            self.cropView.backgroundColor = zlRGB(0, 0, 0)
+            self.cropView.alpha = 0.7
             self.view.addSubview(self.cropView)
         
             self.cropLable = UILabel()
-            self.cropLable.textColor = UIColor.init(red: 255, green: 255, blue: 255, alpha: 1)
+            self.cropLable.textColor = UIColor.white
             self.cropLable.font = ZLLayout.bottomToolCropMessageTitleFont;
             self.cropLable.text = "目前视频格式仅支持1分钟时长，超长将自动选取第1分钟哦～"
             self.view.addSubview(self.cropLable)
