@@ -24,7 +24,7 @@
 "hudLoading" = "正在处理...";
 
 "saveImageError" = "图片保存失败";
-"exceededMaxSelectCount" = "最多只能选择%ld张图片";
+"exceededMaxSelectCount" = "最多只能选择%ld张照片";
 "longerThanMaxVideoDuration" = "不能选择超过%ld秒的视频";
 "shorterThanMaxVideoDuration" = "不能选择低于%ld秒的视频";
 "ZLPhotoBrowserMaxVideoSelectCountInMix" = "最多只能选择%ld个视频";
