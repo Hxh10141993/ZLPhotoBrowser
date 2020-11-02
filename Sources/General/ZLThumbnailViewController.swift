@@ -299,7 +299,7 @@ class ZLThumbnailViewController: UIViewController {
         
             self.cropLable = UILabel()
             self.cropLable.textColor = UIColor.init(red: 255, green: 255, blue: 255, alpha: 1)
-            self.cropLable.font = UIFont.systemFont(ofSize: 12)
+            self.cropLable.font = ZLLayout.bottomToolCropMessageTitleFont;
             self.cropLable.text = "目前视频格式仅支持1分钟时长，超长将自动选取第1分钟哦～"
             self.view.addSubview(self.cropLable)
         }
@@ -395,6 +395,8 @@ class ZLThumbnailViewController: UIViewController {
     @objc func previewBtnClick() {
         let nav = self.navigationController as! ZLImageNavController
         let vc = ZLPhotoPreviewViewController(photos: nav.arrSelectedModels, index: 0)
+        ZLPhotoConfiguration.default().previewImageBlock?()
+
         self.show(vc, sender: nil)
     }
     

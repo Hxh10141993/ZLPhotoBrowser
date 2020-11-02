@@ -314,6 +314,8 @@ public class ZLPhotoConfiguration: NSObject {
     /// 框架主题颜色配置
     @objc public var themeColorDeploy: ZLPhotoThemeColorDeploy = .default()
     
+    @objc public var previewImageBlock: ( () -> Void )?
+    
     /// 框架字体
     @objc public var themeFontName: String? = nil {
         didSet {
