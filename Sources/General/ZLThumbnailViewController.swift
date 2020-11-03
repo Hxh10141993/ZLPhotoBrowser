@@ -1094,7 +1094,7 @@ class ZLEmbedAlbumListNavView: UIView {
             
             var frame = self.arrow.frame;
             frame.origin.x = self.albumTitleLabel.frame.maxX+5
-            frame.origin.y = (ZLEmbedAlbumListNavView.titleViewH-ZLEmbedAlbumListNavView.arrowH)/2.0
+            frame.origin.y = (ZLEmbedAlbumListNavView.titleViewH-(self.arrow.image?.size.height)!)/2.0
             
             self.arrow.frame = frame
             
