@@ -879,12 +879,11 @@ extension ZLThumbnailViewController: UICollectionViewDataSource, UICollectionVie
                 if !isDegraded {
                     if let image = image {
                         
+                        if (ZLPhotoConfiguration.default().clipImageBlock != nil) {
+                            ZLPhotoConfiguration.default().clipImageBlock!(image)
+                        }
                         let nav1 = self?.navigationController as? ZLImageNavController
-                        nav1?.dismiss(animated: false, completion: {
-                            if (ZLPhotoConfiguration.default().clipImageBlock != nil) {
-                                ZLPhotoConfiguration.default().clipImageBlock!(image)
-                            }
-                        })
+                        nav1?.dismiss(animated: false, completion:nil)
                     } else {
                         showAlertView(localLanguageTextValue(.imageLoadFailed), self)
                     }
