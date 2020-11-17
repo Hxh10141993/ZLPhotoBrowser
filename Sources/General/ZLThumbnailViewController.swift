@@ -867,7 +867,7 @@ extension ZLThumbnailViewController: UICollectionViewDataSource, UICollectionVie
 
 
         
-        if ZLPhotoConfiguration.default().enablePhotoClip {
+        if !ZLPhotoConfiguration.default().enablePhotoClip {
             let hud = ZLProgressHUD(style: ZLPhotoConfiguration.default().hudStyle)
             hud.show()
             let model = self.arrDataSources[index];
@@ -879,11 +879,17 @@ extension ZLThumbnailViewController: UICollectionViewDataSource, UICollectionVie
                 if !isDegraded {
                     if let image = image {
                         
-                        if (ZLPhotoConfiguration.default().clipImageBlock != nil) {
-                            ZLPhotoConfiguration.default().clipImageBlock!(image)
+                        let vc = ZLClipImageViewController(image: image, editRect: CGRect(origin: .zero, size: size))
+                        self!.show(vc, sender: nil)
+                        
+                        vc.clipDoneBlock = { [weak self] (angle, editFrame) in
+                            let nav1 = self?.navigationController as? ZLImageNavController
+                            nav1?.dismiss(animated: false, completion: {
+                                if (ZLPhotoConfiguration.default().clipImageBlock != nil) {
+                                    ZLPhotoConfiguration.default().clipImageBlock!(image)
+                                }
+                            })
                         }
-                        let nav1 = self?.navigationController as? ZLImageNavController
-                        nav1?.dismiss(animated: false, completion:nil)
                     } else {
                         showAlertView(localLanguageTextValue(.imageLoadFailed), self)
                     }
