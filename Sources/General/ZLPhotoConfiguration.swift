@@ -317,7 +317,7 @@ public class ZLPhotoConfiguration: NSObject {
     
     @objc public var previewImageBlock: ( () -> Void )?
     
-    @objc public var clipImageBlock: ( (UIImage) -> Void )?
+    @objc public var clipImageBlock: ( (UIImage,UIViewController) -> Void )?
     
     /// 框架字体
     @objc public var themeFontName: String? = nil {
