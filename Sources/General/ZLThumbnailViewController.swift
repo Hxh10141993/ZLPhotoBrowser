@@ -864,8 +864,36 @@ extension ZLThumbnailViewController: UICollectionViewDataSource, UICollectionVie
             return
         }
         
-        let vc = ZLPhotoPreviewViewController(photos: self.arrDataSources, index: index)
-        self.show(vc, sender: nil)
+
+
+        
+        if ZLPhotoConfiguration.default().enablePhotoClip {
+            let hud = ZLProgressHUD(style: ZLPhotoConfiguration.default().hudStyle)
+            hud.show()
+            let model = self.arrDataSources[index];
+            let asset = model.asset
+            let w = min(UIScreen.main.bounds.width, ZLMaxImageWidth) * 2
+            let size = CGSize(width: w, height: w * CGFloat(asset.pixelHeight) / CGFloat(asset.pixelWidth))
+            hud.show()
+            ZLPhotoManager.fetchImage(for: asset, size: size) { [weak self] (image, isDegraded) in
+                if !isDegraded {
+                    if let image = image {
+                        if (ZLPhotoConfiguration.default().clipImageBlock != nil) {
+                            ZLPhotoConfiguration.default().clipImageBlock!(image)
+                        }
+                        let nav1 = self?.navigationController as? ZLImageNavController
+                        nav1?.dismiss(animated: false, completion: nil)
+                        
+                    } else {
+                        showAlertView(localLanguageTextValue(.imageLoadFailed), self)
+                    }
+                    hud.hide()
+                }
+            }
+        }else{
+            let vc = ZLPhotoPreviewViewController(photos: self.arrDataSources, index: index)
+            self.show(vc, sender: nil)
+        }
     }
     
     func shouldDirectEdit(_ model: ZLPhotoModel) -> Bool {

@@ -304,7 +304,8 @@ public class ZLPhotoConfiguration: NSObject {
     @objc public var navTitleFont:UIFont = .systemFont(ofSize: 14)
     /// 显示底部裁剪视频提醒框
     @objc public var enableBottomToolViewCropView:Bool = false
-    
+    /// 选择图片直接裁剪
+    @objc public var enablePhotoClip:Bool = false
     /// 确认按钮是否添加背景图片跟路径同时使用
     @objc public var bottomToolViewBtnBgImageShow:Bool = false
     /// 确认按钮默认选中图片路径
@@ -315,6 +316,8 @@ public class ZLPhotoConfiguration: NSObject {
     @objc public var themeColorDeploy: ZLPhotoThemeColorDeploy = .default()
     
     @objc public var previewImageBlock: ( () -> Void )?
+    
+    @objc public var clipImageBlock: ( (UIImage) -> Void )?
     
     /// 框架字体
     @objc public var themeFontName: String? = nil {
