@@ -529,7 +529,12 @@ class ZLPhotoPreviewViewController: UIViewController {
             hud.show()
 //            // 判断视频
             if ZLPhotoConfiguration.default().enableCropOneVideo,currentModel.type == .video , currentModel.asset.duration > 60.0 {
-                PHImageManager.default().requestAVAsset(forVideo: currentModel.asset, options: nil, resultHandler: { avAsset, audioMix, info in
+                let options = PHVideoRequestOptions()
+                options.deliveryMode = .automatic
+                options.version = PHVideoRequestOptionsVersion(rawValue: PHVideoRequestOptionsVersion.current.rawValue)!
+                options.isNetworkAccessAllowed = true
+                PHImageManager.default().requestAVAsset(forVideo: currentModel.asset, options: options, resultHandler: { avAsset, audioMix, info in
+                    
                     let duration = CMTimeMakeWithSeconds(Float64(60.0), preferredTimescale:avAsset!.duration.timescale)
                     ZLPhotoManager.exportEditVideo(for: avAsset!, range:CMTimeRangeMake(start:CMTimeMakeWithSeconds(Float64(0), preferredTimescale:avAsset!.duration.timescale), duration: duration)
                     ) { [weak self] (url, error) in
