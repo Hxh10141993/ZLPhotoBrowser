@@ -528,10 +528,10 @@ class ZLPhotoPreviewViewController: UIViewController {
             let hud = ZLProgressHUD(style: ZLPhotoConfiguration.default().hudStyle)
             hud.show()
 //            // 判断视频
-            if ZLPhotoConfiguration.default().enableCropOneVideo,currentModel.type == .video , currentModel.asset.duration > 60.0 {
+            if !ZLPhotoConfiguration.default().enableCropOneVideo,currentModel.type == .video , currentModel.asset.duration > 60.0 {
                 let options = PHVideoRequestOptions()
                 options.deliveryMode = .automatic
-                options.version = PHVideoRequestOptionsVersion(rawValue: PHVideoRequestOptionsVersion.current.rawValue)!
+                options.version = PHVideoRequestOptionsVersion(rawValue: PHVideoRequestOptionsVersion.original.rawValue)!
                 options.isNetworkAccessAllowed = true
                 PHImageManager.default().requestAVAsset(forVideo: currentModel.asset, options: options, resultHandler: { avAsset, audioMix, info in
                     
