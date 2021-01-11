@@ -167,7 +167,7 @@ class ZLThumbnailViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        var insets = UIEdgeInsets.zero
+        var insets = UIEdgeInsets.init(top: 20, left: 0, bottom: 0, right: 0)
         if #available(iOS 11.0, *) {
             insets = self.view.safeAreaInsets
         }
@@ -192,8 +192,8 @@ class ZLThumbnailViewController: UIViewController {
         let bottomViewH = showBottomView ? ZLLayout.bottomToolViewH : 0
         
         let totalWidth = self.view.frame.width - insets.left - insets.right
-        self.collectionView.frame = CGRect(x: insets.left, y: 0, width: totalWidth, height: self.view.frame.height)
-        self.collectionView.contentInset = UIEdgeInsets(top: 44, left: 0, bottom: bottomViewH, right: 0)
+        self.collectionView.frame = CGRect(x: insets.left, y:navViewFrame.maxY, width: totalWidth, height: self.view.frame.height - navViewFrame.maxY)
+        self.collectionView.contentInset = UIEdgeInsets(top:0, left: 0, bottom: bottomViewH, right: 0)
         self.collectionView.scrollIndicatorInsets = UIEdgeInsets(top: insets.top, left: 0, bottom: bottomViewH, right: 0)
         
         guard showBottomView else { return }
@@ -1092,7 +1092,7 @@ class ZLEmbedAlbumListNavView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        var insets = UIEdgeInsets.zero
+        var insets = UIEdgeInsets.init(top: 20, left: 0, bottom: 0, right: 0)
         if #available(iOS 11.0, *) {
             insets = self.safeAreaInsets
         }
@@ -1103,7 +1103,7 @@ class ZLEmbedAlbumListNavView: UIView {
     }
     
     func refreshTitleViewFrame() {
-        var insets = UIEdgeInsets.zero
+        var insets = UIEdgeInsets.init(top: 20, left: 0, bottom: 0, right: 0)
         if #available(iOS 11.0, *) {
             insets = self.safeAreaInsets
         }
