@@ -1092,7 +1092,7 @@ class ZLEmbedAlbumListNavView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        var insets = UIEdgeInsets.init(top: 24, left: 0, bottom: 0, right: 0);
+        var insets = UIEdgeInsets.zero
         if #available(iOS 11.0, *) {
             insets = self.safeAreaInsets
         }
@@ -1103,7 +1103,7 @@ class ZLEmbedAlbumListNavView: UIView {
     }
     
     func refreshTitleViewFrame() {
-        var insets = UIEdgeInsets.init(top: 24, left: 0, bottom: 0, right: 0);
+        var insets = UIEdgeInsets.zero
         if #available(iOS 11.0, *) {
             insets = self.safeAreaInsets
         }
@@ -1114,7 +1114,7 @@ class ZLEmbedAlbumListNavView: UIView {
         let titleBgControlW = albumTitleW + ZLEmbedAlbumListNavView.arrowH + 20
         
         UIView.animate(withDuration: 0.25) {
-            self.titleBgControl.frame = CGRect(x: (self.frame.width-titleBgControlW)/2, y: insets.top + 44, width: titleBgControlW, height: ZLEmbedAlbumListNavView.titleViewH)
+            self.titleBgControl.frame = CGRect(x: (self.frame.width-titleBgControlW)/2, y: insets.top+(44-ZLEmbedAlbumListNavView.titleViewH)/2, width: titleBgControlW, height: ZLEmbedAlbumListNavView.titleViewH)
             self.albumTitleLabel.frame = CGRect(x: 10, y: 0, width: albumTitleW, height: ZLEmbedAlbumListNavView.titleViewH)
     
             
