@@ -25,7 +25,7 @@
 //  THE SOFTWARE.
 
 import UIKit
-
+import AVKit
 public typealias Second = Int
 
 public class ZLPhotoConfiguration: NSObject {
@@ -95,6 +95,8 @@ public class ZLPhotoConfiguration: NSObject {
             return pri_allowTakePhotoInLibrary && (allowTakePhoto || allowRecordVideo)
         }
     }
+    
+    @objc public var allowPreviewVideo = false;
     
     /// 是否允许编辑图片，图片可允许编辑多张
     @objc public var allowEditImage = true
@@ -318,6 +320,8 @@ public class ZLPhotoConfiguration: NSObject {
     @objc public var previewImageBlock: ( () -> Void )?
     
     @objc public var clipImageBlock: ( (UIImage,UIViewController) -> Void )?
+    
+    @objc public var previewVideoBlock: ((AVPlayerItem,UIViewController) -> Void )?
     
     /// 框架字体
     @objc public var themeFontName: String? = nil {

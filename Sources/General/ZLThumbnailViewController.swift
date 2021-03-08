@@ -872,16 +872,9 @@ extension ZLThumbnailViewController: UICollectionViewDataSource, UICollectionVie
             ZLPhotoManager.fetchImage(for: asset, size: size) { [weak self] (image, isDegraded) in
                 if !isDegraded {
                     if let image = image {
-                        
-//                        let nav1 = self?.navigationController as? ZLImageNavController
-
                         if (ZLPhotoConfiguration.default().clipImageBlock != nil) {
                             ZLPhotoConfiguration.default().clipImageBlock!(image,self!)
                         }
-                        
-//                        nav1?.dismiss(animated: false, completion: {
-
-//                        })
                     } else {
                         showAlertView(localLanguageTextValue(.imageLoadFailed), self)
                     }
@@ -889,8 +882,25 @@ extension ZLThumbnailViewController: UICollectionViewDataSource, UICollectionVie
                 }
             }
         }else{
-            let vc = ZLPhotoPreviewViewController(photos: self.arrDataSources, index: index)
-            self.show(vc, sender: nil)
+            
+            if  ZLPhotoConfiguration.default().allowPreviewVideo {
+                let hud = ZLProgressHUD(style: ZLPhotoConfiguration.default().hudStyle)
+                let model = self.arrDataSources[index];
+                hud.show()
+                ZLPhotoManager.fetchVideo(for: model.asset, progress: { [weak self] (progress, _, _, _) in
+                    NSLog("progress")
+                }, completion: { [weak self] (item, info, isDegraded) in
+                    if let item = item{
+                        if(ZLPhotoConfiguration.default().previewVideoBlock != nil){
+                            ZLPhotoConfiguration.default().previewVideoBlock!(item,self!)
+                        }
+                    }
+                    hud.hide()
+                })
+            }else{
+                let vc = ZLPhotoPreviewViewController(photos: self.arrDataSources, index: index)
+                self.show(vc, sender: nil)
+            }
         }
     }
     
