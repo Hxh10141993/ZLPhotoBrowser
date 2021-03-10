@@ -69,6 +69,10 @@ class ZLThumbnailViewController: UIViewController {
     
     var cropLable: UILabel!
     
+    var videoRemindView: UIView!
+    
+    var videoRemindLb: UILabel!
+    
     var showCameraCell: Bool {
         if ZLPhotoConfiguration.default().allowTakePhotoInLibrary && self.albumList.isCameraRoll {
             return true
@@ -149,6 +153,8 @@ class ZLThumbnailViewController: UIViewController {
         if #available(iOS 14.0, *), PHPhotoLibrary.authorizationStatus(for: .readWrite) == .limited {
             PHPhotoLibrary.shared().register(self)
         }
+        
+        self.hideRemindView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -221,7 +227,11 @@ class ZLThumbnailViewController: UIViewController {
         self.originalBtn.frame = CGRect(x: (self.bottomView.bounds.width-w)/2-5, y: btnY, width: w, height: btnH)
         
         
-       
+        if ZLPhotoConfiguration.default().showVideoHud {
+            self.videoRemindView.frame = CGRect(x: insets.left, y:navViewFrame.maxY, width: self.view.bounds.width, height:  ZLLayout.cropToolViewH)
+            self.videoRemindLb.frame = CGRect(x: 16, y:navViewFrame.maxY, width: self.view.bounds.width - 16, height:  ZLLayout.cropToolViewH)
+        }
+
         
         self.refreshDoneBtnFrame()
         
@@ -233,6 +243,16 @@ class ZLThumbnailViewController: UIViewController {
                 self.collectionView.scrollToItem(at: ip, at: .top, animated: false)
             }
         }
+    }
+    
+    func hideRemindView(){
+        if ZLPhotoConfiguration.default().showVideoHud {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(3 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {
+                self.videoRemindLb.isHidden = true
+                self.videoRemindView.isHidden = true
+            })
+        }
+  
     }
     
     func setupUI() {
@@ -308,6 +328,20 @@ class ZLThumbnailViewController: UIViewController {
             self.cropLable.text = "目前视频格式仅支持1分钟时长，超长将自动选取第1分钟哦～"
             self.view.addSubview(self.cropLable)
         }
+        
+        if ZLPhotoConfiguration.default().showVideoHud {
+            self.videoRemindView = UIView()
+            self.videoRemindView.backgroundColor = zlRGB(0, 0, 0)
+            self.videoRemindView.alpha = 0.7
+            self.view.addSubview(self.videoRemindView)
+        
+            self.videoRemindLb = UILabel()
+            self.videoRemindLb.textColor = UIColor.white
+            self.videoRemindLb.font = ZLLayout.bottomToolCropMessageTitleFont;
+            self.videoRemindLb.text = "仅支持投稿视频类作品哦～"
+            self.view.addSubview(self.videoRemindLb)
+        }
+    
         
 //        self.cropView.
         

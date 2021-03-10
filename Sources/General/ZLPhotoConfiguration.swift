@@ -312,6 +312,8 @@ public class ZLPhotoConfiguration: NSObject {
     @objc public var bottomToolViewBtnBgImageShow:Bool = false
     /// 确认按钮默认选中图片路径
     @objc public var botomToolViewBtnBgImageName:String?
+    /// 是否显示提醒框
+    @objc public var showVideoHud:Bool = false
     /// 设置拍摄模式是否全屏
     @objc public var videoFullScreen: Bool = false
     /// 框架主题颜色配置
