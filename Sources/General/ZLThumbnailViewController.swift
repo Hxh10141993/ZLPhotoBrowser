@@ -202,6 +202,12 @@ class ZLThumbnailViewController: UIViewController {
         self.collectionView.contentInset = UIEdgeInsets(top:0, left: 0, bottom: bottomViewH, right: 0)
         self.collectionView.scrollIndicatorInsets = UIEdgeInsets(top: insets.top, left: 0, bottom: bottomViewH, right: 0)
         
+        
+        if ZLPhotoConfiguration.default().showVideoHud {
+            self.videoRemindView.frame = CGRect(x: insets.left, y:navViewFrame.maxY, width: self.view.bounds.width, height:  ZLLayout.cropToolViewH)
+            self.videoRemindLb.frame = CGRect(x: 16, y:navViewFrame.maxY, width: self.view.bounds.width - 16, height:  ZLLayout.cropToolViewH)
+        }
+
         guard showBottomView else { return }
         
                 
@@ -226,12 +232,6 @@ class ZLThumbnailViewController: UIViewController {
         let w = originalTitle.boundingRect(font: ZLLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 30)).width + 30
         self.originalBtn.frame = CGRect(x: (self.bottomView.bounds.width-w)/2-5, y: btnY, width: w, height: btnH)
         
-        
-        if ZLPhotoConfiguration.default().showVideoHud {
-            self.videoRemindView.frame = CGRect(x: insets.left, y:navViewFrame.maxY, width: self.view.bounds.width, height:  ZLLayout.cropToolViewH)
-            self.videoRemindLb.frame = CGRect(x: 16, y:navViewFrame.maxY, width: self.view.bounds.width - 16, height:  ZLLayout.cropToolViewH)
-        }
-
         
         self.refreshDoneBtnFrame()
         
