@@ -955,12 +955,14 @@ extension ZLThumbnailViewController: UICollectionViewDataSource, UICollectionVie
                                     }
                                 }
                             }
-                            hud.hide()
+                            hud.hide();
                         }
                     }else{
                         let urlAsset = avAsset as? AVURLAsset
-                        if(ZLPhotoConfiguration.default().previewVideoBlock != nil){
-                            ZLPhotoConfiguration.default().previewVideoBlock!((urlAsset?.url.path ?? <#default value#>) as NSString,self)
+                        if urlAsset != nil {
+                            if(ZLPhotoConfiguration.default().previewVideoBlock != nil){
+                                ZLPhotoConfiguration.default().previewVideoBlock!(urlAsset!.url.path as NSString,self)
+                            }
                         }
                         hud.hide()
                     }
