@@ -921,16 +921,95 @@ extension ZLThumbnailViewController: UICollectionViewDataSource, UICollectionVie
                 let hud = ZLProgressHUD(style: ZLPhotoConfiguration.default().hudStyle)
                 let model = self.arrDataSources[index];
                 hud.show()
-                ZLPhotoManager.fetchVideo(for: model.asset, progress: { [weak self] (progress, _, _, _) in
-                    NSLog("progress")
-                }, completion: { [weak self] (item, info, isDegraded) in
-                    if let item = item{
-                        if(ZLPhotoConfiguration.default().previewVideoBlock != nil){
-                            ZLPhotoConfiguration.default().previewVideoBlock!(item,self!)
+                
+                let options = PHVideoRequestOptions()
+                options.version = PHVideoRequestOptionsVersion(rawValue: PHVideoRequestOptionsVersion.original.rawValue)!
+                options.deliveryMode = .automatic
+                options.isNetworkAccessAllowed = true
+                let manager = PHImageManager.default()
+                
+                manager.requestAVAsset(forVideo: model.asset, options: options, resultHandler: { avAsset, audioMix, info in
+                    if avAsset is AVComposition{
+                        let assetResources = PHAssetResource.assetResources(for: model.asset)
+                        var resource:PHAssetResource?
+                        for assetRes in assetResources {
+                            if assetRes.type == .pairedVideo || assetRes.type == .video {
+                                resource = assetRes
+                            }
                         }
+                        var fileName = ""
+                        if resource?.originalFilename != nil {
+                            fileName = resource?.originalFilename ?? ""
+                        }
+                        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).map(\.path)
+                        let documentsDirectory = paths.first
+                        let myPathDocs = URL(fileURLWithPath: documentsDirectory ?? "").appendingPathComponent("mergeSlowMoVideo-\(arc4random() % 1000).MOV").path
+                        let url = URL(fileURLWithPath: myPathDocs)
+                        let options = PHAssetResourceRequestOptions()
+                        options.isNetworkAccessAllowed = true
+                        PHAssetResourceManager.default().writeData(for: resource!, toFile: url, options: options) { error in
+                            if error != nil{
+                                DispatchQueue.main.async {
+                                    if(ZLPhotoConfiguration.default().previewVideoBlock != nil){
+                                        ZLPhotoConfiguration.default().previewVideoBlock!(url.path as NSString,self)
+                                    }
+                                }
+                            }
+                            hud.hide()
+                        }
+                    }else{
+                        let urlAsset = avAsset as? AVURLAsset
+                        if(ZLPhotoConfiguration.default().previewVideoBlock != nil){
+                            ZLPhotoConfiguration.default().previewVideoBlock!((urlAsset?.url.path ?? <#default value#>) as NSString,self)
+                        }
+                        hud.hide()
                     }
-                    hud.hide()
                 })
+                
+//                manager.requestAVAsset(forVideo: model.asset, options: options, resultHandler: { avAsset, audioMix, info in
+//
+//                    if avAsset is AVComposition {
+//
+//                            let assetResources = PHAssetResource.assetResources(for: model.asset)
+//                            var resource: PHAssetResource?
+//                            for assetRes in assetResources {
+//                            if assetRes.type == .pairedVideo || assetRes.type == .video {
+//                                resource = assetRes
+//                                }
+//                            }
+//
+//                            var fileName = ""
+//                if resource.originalFilename != nil {
+//                    fileName = resource.originalFilename ?? ""
+//                }
+//                let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).map(\.path)
+//                let documentsDirectory = paths.first
+//                let myPathDocs = URL(fileURLWithPath: documentsDirectory ?? "").appendingPathComponent("mergeSlowMoVideo-\(arc4random() % 1000).MOV").path
+//
+//
+//                        let url = URL(fileURLWithPath: myPathDocs)
+//                let options = PHAssetResourceRequestOptions()
+//                options.isNetworkAccessAllowed = true
+//                        PHAssetResourceManager.default().writeData(for: resource, toFile: url, options: options, completionHandler: { error in
+//                    if error == nil {
+//                        DispatchQueue.main.async(execute: {
+//                            itemModel.videoUrl = url.path
+//                            weakSelf.postItems.append(itemModel)
+//                            weakSelf.collectionView.reloadData()
+//                            weakSelf.changeConfirmBtnStatus()
+//                        }
+//                    })
+                
+//                ZLPhotoManager.fetchVideo(for: model.asset, progress: { [weak self] (progress, _, _, _) in
+//                    NSLog("progress")
+//                }, completion: { [weak self] (item, info, isDegraded) in
+//                    if let item = item{
+//                        if(ZLPhotoConfiguration.default().previewVideoBlock != nil){
+//                            ZLPhotoConfiguration.default().previewVideoBlock!(item,self!)
+//                        }
+//                    }
+//                    hud.hide()
+//                })
             }else{
                 let vc = ZLPhotoPreviewViewController(photos: self.arrDataSources, index: index)
                 self.show(vc, sender: nil)
