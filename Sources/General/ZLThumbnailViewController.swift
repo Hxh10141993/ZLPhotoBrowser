@@ -951,7 +951,7 @@ extension ZLThumbnailViewController: UICollectionViewDataSource, UICollectionVie
                             if error != nil{
                                 DispatchQueue.main.async {
                                     if(ZLPhotoConfiguration.default().previewVideoBlock != nil){
-                                        ZLPhotoConfiguration.default().previewVideoBlock!(url.path as NSString,self)
+                                        ZLPhotoConfiguration.default().previewVideoBlock!(url as NSURL,self)
                                     }
                                 }
                             }
@@ -961,7 +961,7 @@ extension ZLThumbnailViewController: UICollectionViewDataSource, UICollectionVie
                         let urlAsset = avAsset as? AVURLAsset
                         if urlAsset != nil {
                             if(ZLPhotoConfiguration.default().previewVideoBlock != nil){
-                                ZLPhotoConfiguration.default().previewVideoBlock!(urlAsset!.url.path as NSString,self)
+                                ZLPhotoConfiguration.default().previewVideoBlock!(urlAsset!.url as NSURL,self)
                             }
                         }
                         hud.hide()

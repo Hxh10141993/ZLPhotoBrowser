@@ -323,7 +323,7 @@ public class ZLPhotoConfiguration: NSObject {
     
     @objc public var clipImageBlock: ( (UIImage,UIViewController) -> Void )?
     
-    @objc public var previewVideoBlock: ((NSString,UIViewController) -> Void )?
+    @objc public var previewVideoBlock: ((NSURL,UIViewController) -> Void )?
     
     /// 框架字体
     @objc public var themeFontName: String? = nil {
