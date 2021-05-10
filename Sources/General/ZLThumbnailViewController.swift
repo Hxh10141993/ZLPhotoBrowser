@@ -924,7 +924,7 @@ extension ZLThumbnailViewController: UICollectionViewDataSource, UICollectionVie
                 
                 let options = PHVideoRequestOptions()
                 options.version = PHVideoRequestOptionsVersion(rawValue: PHVideoRequestOptionsVersion.original.rawValue)!
-                options.deliveryMode = .automatic
+                options.deliveryMode = .highQualityFormat
                 options.isNetworkAccessAllowed = true
                 let manager = PHImageManager.default()
                 
